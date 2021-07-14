@@ -11,6 +11,7 @@ function Search({onSearch}) {
     const onSumbit = event => {
         event.preventDefault();
         onSearch(title);
+        setTitle("");
     };
 
     return (

@@ -17,12 +17,19 @@ function App() {
   );
 
   const onSearch = async (searchword) => {
-    console.log(searchword);
-    
+    const searchedRules = [];
+    rules?.forEach( rule => {
+      if(rule.includes(searchword)){
+        searchedRules.push(rule);
+      }
+    });
+    setSelected({
+      chapter: null,
+      rules: searchedRules,
+    })
   };
 
-  const onSelect = async (e,selectedChapter) => {
-    //e.preventDefault();
+  const onSelect = async (selectedChapter) => {
     const chapter = selectedChapter.slice(0,3).toString();
     const selectedRules = [];
     rules?.forEach( rule => {

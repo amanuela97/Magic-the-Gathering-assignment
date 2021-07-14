@@ -34,7 +34,7 @@ function Table({chapters,onSelect}) {
             {chapters?.map((chapter, index) => (
             <TableRow key={index}>
               <TableCell> 
-              <a href="#top"  onClick={(e) => onSelect(e,chapter)}>{chapter}</a>
+              <a href="#top"  onClick={(e) => onSelect(chapter)}>{chapter}</a>
               </TableCell> 
             </TableRow>
             ))}
