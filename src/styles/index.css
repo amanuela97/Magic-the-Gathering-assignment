@@ -16,19 +16,19 @@ code {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: flex-start;
+}
+
+.SearchAndDisplay {
+  width: 50%;
 }
 
 /*Search */
 .search{
-  width: 50%;
-  height: 57px;
-  background-color: red;
+  padding: 2px;
 }
 
 form {
   width: 100%;
-  height: 0.8%;
   display: flex;
   justify-content: center;
 }
@@ -58,9 +58,31 @@ input {
 }
 
 /*link*/
+a{
+  color: blue;
+}
+
 a:active{
   color: red;
-} 
+}
+
+
+.TableContainer{
+  width: 50%;
+  scroll-behavior: smooth;
+}
+
+/*display*/
+.display{
+  text-align: center;
+  padding: 2px;
+}
+
+li{
+  padding: 5px 0;
+  margin: 0 10%;
+}
+
 
 
 

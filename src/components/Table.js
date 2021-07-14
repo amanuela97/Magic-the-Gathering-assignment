@@ -4,16 +4,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Table as MaterialTable, TableBody, 
     TableCell, 
-    TableContainer, 
     TableHead, 
     TableRow} 
     from '@material-ui/core';
     
-function Table({rules, chapters,onSelect}) {
+function Table({chapters,onSelect}) {
 
     const useStyles = makeStyles({
         table: {
-          minWidth: 450,
+          minWidth: "50%",
         },
     });
 
@@ -21,10 +20,10 @@ function Table({rules, chapters,onSelect}) {
 
     useEffect(() => {
         console.log('Table component');
-    },[chapters, rules]); 
+    },[chapters]); 
 
     return (
-        <TableContainer component={Paper} style={{width: "50%"}}>
+        <div component={Paper} className="TableContainer" id="top">
         <MaterialTable className={classes.table}  aria-label="simple table">
         <TableHead>
             <TableRow>
@@ -35,13 +34,13 @@ function Table({rules, chapters,onSelect}) {
             {chapters?.map((chapter, index) => (
             <TableRow key={index}>
               <TableCell> 
-              <a href="#?"  onClick={(e) => onSelect(e,chapter)}>{chapter}</a>
+              <a href="#top"  onClick={(e) => onSelect(e,chapter)}>{chapter}</a>
               </TableCell> 
             </TableRow>
             ))}
           </TableBody>
         </MaterialTable>
-      </TableContainer>
+      </div>
     );
 }
 

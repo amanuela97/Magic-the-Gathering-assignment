@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import Display from './components/Display';
 import Search from './components/Search';
 import Table from './components/Table';
 
@@ -8,6 +9,12 @@ function App() {
   const [data, setData] = useState(null);
   const [chapters,setChapters] = useState(null);
   const [rules, setRules] = useState(null);
+  const [selected, setSelected] = useState(
+    {
+      chapter: null,
+      rules: null
+    }
+  );
 
   const onSearch = async (searchword) => {
     console.log(searchword);
@@ -15,9 +22,19 @@ function App() {
   };
 
   const onSelect = async (e,selectedChapter) => {
-    e.preventDefault()
-    console.log(selectedChapter);
-    
+    //e.preventDefault();
+    const chapter = selectedChapter.slice(0,3).toString();
+    const selectedRules = [];
+    rules?.forEach( rule => {
+      let word = rule.slice(0,3).toString();
+      if(word === chapter){
+        selectedRules.push(rule);
+      }
+    });
+    setSelected({
+      chapter: selectedChapter,
+      rules: selectedRules,
+    })
   };
 
   const parseData = useCallback( (data) => { 
@@ -57,8 +74,11 @@ function App() {
 
   return (
     <div className="App">
-        <Table rules={rules} chapters={chapters} onSelect={onSelect}/>
+      <Table chapters={chapters} onSelect={onSelect}/>
+      <div className="SearchAndDisplay">
         <Search onSearch={onSearch}/>
+        <Display selected={selected}/>  
+      </div>
     </div>
   );
 }
