@@ -17,6 +17,7 @@ function App() {
   );
 
   const onSearch = async (searchword) => {
+    //extract rules with searched keyword
     const searchedRules = [];
     rules?.forEach( rule => {
       if(rule.includes(searchword)){
@@ -27,14 +28,16 @@ function App() {
       chapter: null,
       rules: searchedRules,
     })
+
   };
 
   const onSelect = async (selectedChapter) => {
+    //extract rules to selected chapters
     const chapter = selectedChapter.slice(0,3).toString();
     const selectedRules = [];
     rules?.forEach( rule => {
-      let word = rule.slice(0,3).toString();
-      if(word === chapter){
+      let ruleNum = rule.slice(0,3).toString();    
+      if(ruleNum === chapter){
         selectedRules.push(rule);
       }
     });
@@ -45,7 +48,7 @@ function App() {
   };
 
   const parseData = useCallback( (data) => { 
-    //split file into an array of substrings
+    //parse txt file and extract rules and chapters
     const Lines = data?.split('\n');
     const chapter_regex = /^(\d+\.\s)$/;
     const rule_regex = /^\d+\.\d$/;
