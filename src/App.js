@@ -15,13 +15,43 @@ function App() {
       rules: null
     }
   );
+  const regex = /\d\d\d(.*?)/g;
+  const number_Regex = /\d/;
+  const letter_Regex = /[a-z]/;
+  const dot_Regex = /\./;
+  let subNum = 9;
+
+  const createLink = async (rule,selectedRules) => {
+    let Final_Rule = rule;
+    let ruleNumbers = [];
+    let newRule = rule.split(' ').slice(1).join(' ');
+    let result = Array.from(newRule.matchAll(regex));
+    if(result.length > 0) {
+      for(let k = 0; k < result.length; k++){
+        let replacedWord = newRule.substr(result[k].index, subNum).split(' ');
+        let num = '';
+        for (let i = 0; i < replacedWord[0].length; i++) {
+          if(number_Regex.test(replacedWord[0][i]) || letter_Regex.test(replacedWord[0][i]) || dot_Regex.test(replacedWord[0][i])){
+            num += replacedWord[0][i]; 
+          } 
+        }
+        ruleNumbers.push(num);
+      }
+      ruleNumbers.forEach((ruleN) => {
+        Final_Rule = Final_Rule.replace(ruleN, ruleN.link('#top'))
+      })
+      selectedRules.push(<span dangerouslySetInnerHTML={{ __html: Final_Rule }} />);
+    } else {
+      selectedRules.push(rule);
+    }
+  }
 
   const onSearch = async (searchword) => {
     //extract rules with searched keyword
     const searchedRules = [];
     rules?.forEach( rule => {
       if(rule.includes(searchword)){
-        searchedRules.push(rule);
+        createLink(rule,searchedRules)
       }
     });
     setSelected({
@@ -35,36 +65,10 @@ function App() {
     //extract rules to selected chapters
     const chapter = selectedChapter.slice(0,3).toString();
     const selectedRules = [];
-    const regex = /\d\d\d(.*?)/g;
-    const number_Regex = /\d/;
-    const letter_Regex = /[a-z]/;
-    const dot_Regex = /\./;
-    let subNum = 9;
     rules?.forEach( rule => {
-      let Final_Rule = rule;
       let ruleNum = rule.slice(0,3).toString();    
       if(ruleNum === chapter){
-        let ruleNumbers = [];
-        let newRule = rule.split(' ').slice(1).join(' ');
-        let result = Array.from(newRule.matchAll(regex));
-        if(result.length > 0) {
-          for(let k = 0; k < result.length; k++){
-            let replacedWord = newRule.substr(result[k].index, subNum).split(' ');
-            let num = '';
-            for (let i = 0; i < replacedWord[0].length; i++) {
-              if(number_Regex.test(replacedWord[0][i]) || letter_Regex.test(replacedWord[0][i]) || dot_Regex.test(replacedWord[0][i])){
-                num += replacedWord[0][i]; 
-              } 
-            }
-            ruleNumbers.push(num);
-          }
-          ruleNumbers.forEach((ruleN) => {
-            Final_Rule = Final_Rule.replace(ruleN, ruleN.link('#top'))
-          })
-          selectedRules.push(<span dangerouslySetInnerHTML={{ __html: Final_Rule }} />);
-        } else {
-          selectedRules.push(rule);
-        }
+        createLink(rule, selectedRules)
       }
     });
     setSelected({
