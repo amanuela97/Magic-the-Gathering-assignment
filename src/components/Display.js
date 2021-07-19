@@ -3,9 +3,8 @@ import React,{useEffect} from 'react';
 function Display({selected}) {
 
     useEffect(()=> {
-        console.log("display component");
     },[selected]);
-    
+
     return (
         <div className="display">
             { selected?.chapter &&
@@ -13,7 +12,7 @@ function Display({selected}) {
             }
             <div>
                {selected?.rules?.map((rule, index) => {
-                return <li key={index}>{rule}</li> 
+                return <li key={index}>{rule}</li>
                })} 
             </div>
         </div>

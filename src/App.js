@@ -35,10 +35,30 @@ function App() {
     //extract rules to selected chapters
     const chapter = selectedChapter.slice(0,3).toString();
     const selectedRules = [];
+    const regex = /\d\d\d(.*?)/g;
+    const number_Regex = /\d/;
+    const letter_Regex = /[a-z]/;
+    const dot_Regex = /\./;
+    let subNum = 9;
     rules?.forEach( rule => {
+      let Final_Rule = "";
       let ruleNum = rule.slice(0,3).toString();    
       if(ruleNum === chapter){
-        selectedRules.push(rule);
+        let ruleNum = '';
+        let newRule = rule.split(' ').slice(1).join(' ');
+        let result = Array.from(newRule.matchAll(regex));
+        if(result.length > 0) {
+          let replacedWord = newRule.substr(result[0].index, subNum).split(' ');
+          for (let i = 0; i < replacedWord[0].length; i++) {
+            if(number_Regex.test(replacedWord[0][i]) || letter_Regex.test(replacedWord[0][i]) || dot_Regex.test(replacedWord[0][i])){
+              ruleNum += replacedWord[0][i];
+            } 
+          }
+          Final_Rule = rule.replace(ruleNum, ruleNum.link('#top'))
+          selectedRules.push(<span dangerouslySetInnerHTML={{ __html: Final_Rule }} />);
+        } else {
+          selectedRules.push(rule);
+        }
       }
     });
     setSelected({

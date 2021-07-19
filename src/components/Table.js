@@ -19,7 +19,6 @@ function Table({chapters,onSelect}) {
     const classes = useStyles();
 
     useEffect(() => {
-        console.log('Table component');
     },[chapters]); 
 
     return (
